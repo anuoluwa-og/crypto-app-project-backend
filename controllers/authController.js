@@ -4,6 +4,13 @@ import User from '../models/User.js';
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
+res.cookie('token', token, { 
+  httpOnly: true, 
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+  sameSite: 'none',
+  secure: true
+});
+
 export const register = async (req, res) => {
   const { name, email, password } = req.body;
   console.log('Register attempt:', { name, email, password }); // add this
